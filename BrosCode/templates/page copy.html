@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Table</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 80%;
+            margin: 20px auto;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        #addRowBtn {
+            margin: 10px;
+            padding: 5px 10px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Dynamic Table</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Block</th>
+                <th>Room No.</th>
+                <th>Room Type</th>
+                <th>Occupancy</th>
+                <th>Residents</th>
+            </tr>
+        </thead>
+        <tbody id="tableBody">
+            <!-- Inbuilt single row -->
+            <tr>
+                <form id="dataForm" action="doit" method="GET">
+                    <td><input type="text" name="block"></td>
+                    <td><input type="text" name="roomNo"></td>
+                    <td><input type="text" name="roomType"></td>
+                    <td><input type="text" name="occupancy"></td>
+                    <td><input type="number" name="residents" value="0"></td>
+                    <button id="addRowBtn">Add Row</button>
+                </form>
+            </tr>
+        </tbody>
+    </table>
+
+    <script>
+        const addRowButton = document.getElementById("addRowBtn");
+        const dataForm = document.getElementById("dataForm");
+
+        addRowButton.addEventListener("click", function () {
+            // Clone the form and its elements
+            const newRow = dataForm.cloneNode(true);
+
+            // Clear input values in the new row
+            const inputs = newRow.querySelectorAll('input');
+            inputs.forEach(input => input.value = '');
+
+            // Append the new row to the table body
+            document.getElementById("tableBody").appendChild(newRow);
+
+            // Construct the URL with input data
+            const formData = new FormData(newRow);
+            const urlParams = new URLSearchParams(formData);
+            const newURL = dataForm.getAttribute("action") + '?' + urlParams.toString();
+
+            // Reload the page with the new URL
+            window.location.href = newURL;
+        });
+    </script>
+</body>
+</html>

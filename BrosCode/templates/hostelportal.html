@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Hostel Room Upgradation</title>
+    <style>
+        /* Center-align all text */
+        body {
+            text-align: center;
+            background-image: url('https://cdn.pixabay.com/photo/2017/08/30/01/05/milky-way-2695569_1280.jpg'); /* Add your background image URL here */
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        header {
+            background-color: #007BFF;
+            color: white;
+            padding: 20px 0;
+        }
+
+        header h1 {
+            font-size: 36px;
+            margin: 0;
+        }
+
+        .login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: calc(100vh - 100px);
+        }
+
+        .login-option {
+            text-align: center;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin: 20px;
+            padding: 20px;
+            transition: transform 0.2s;
+        }
+
+        .login-option:hover {
+            transform: translateY(-5px);
+        }
+
+        .login-option h2 {
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        /* Style the buttons */
+        .login-option button {
+            background-color: #007BFF;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            border-radius: 4px;
+        }
+
+        .login-option button:hover {
+            background-color: #0056b3;
+        }
+
+        footer {
+            background-color: #007BFF;
+            color: white;
+            padding: 10px 0;
+        }
+
+        footer p {
+            margin: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Vrooom{{NAME}}</h1>
+    </header>
+
+    <main>
+        <div class="login-container">
+            <div class="login-option">
+                <h2>Student</h2>
+                <a href="csvstudent">
+                    <button type="submit">Student Login</button>
+                </a>
+            </div>
+            <div class="login-option">
+                <h2>Warden</h2>
+                <a href="csvwarden">
+                    <button type="submit">Warden Login</button>
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; Vrooom</p>
+    </footer>
+</body>
+
+</html>

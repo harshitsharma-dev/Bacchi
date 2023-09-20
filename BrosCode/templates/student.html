@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            background-image: url('https://cdn.pixabay.com/photo/2017/08/30/01/05/milky-way-2695569_1280.jpg'); /* Add your background image URL here */
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 1rem;
+        }
+
+        main {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 1rem;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        form {
+            display: grid;
+            grid-gap: 1rem;
+        }
+
+        .form-group {
+            display: grid;
+            grid-template-columns: 150px 1fr;
+            align-items: center;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        select {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        button {
+            background-color: #333;
+            color: #fff;
+            padding: 0.5rem 1rem;
+            border: none;
+            cursor: pointer;
+            margin-bottom: 2px;
+            
+        }
+
+        #bed-options {
+            display: none;
+        }
+    </style>
+    <title>Hostel Room Upgradation</title>
+</head>
+<body>
+    <h1 align="center" style="color:azure">Student Dashboard</h1>
+    <main>
+        <section>
+            <h2>Upgradation Form</h2>
+            <form id="reservation-form">
+                <div class="form-group">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="regNo">Registration Number:</label>
+                    <input type="text" id="regNo" name="regNo" required>
+                </div>
+                <div class="form-group">
+                    <label for="cblock">Current Block:</label>
+                    <input type="text" id="cblock" name="Current Block" required>
+                </div>
+                <div class="form-group">
+                    <label for="rblock">Required Block:</label>
+                    <input type="text" id="rblock" name="Required Block" required>
+                </div>
+                <div class="form-group">
+                    <label for="room-type">Room Type:</label>
+                    <select id="room-type" name="room-type" required>
+                        <option value="none">NONE</option>
+                        <option value="AC">AC</option>
+                        <option value="Non - AC">Non - AC</option>
+                    </select>
+                </div>
+                <div class="form-group" id="bed-options">
+                    <label for="bed-type">Bed Type:</label>
+                    <select id="bed-type" name="bed-type" required>
+                        <!-- Options will be dynamically added here -->
+                    </select>
+                </div>
+                <div class="form-group">
+                    <button type="submit">Submit</button>
+                </div>
+            </form>
+        </section>
+    </main>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const reservationForm = document.getElementById("reservation-form");
+            const roomTypeSelect = document.getElementById("room-type");
+            const bedOptionsDiv = document.getElementById("bed-options");
+            const bedTypeSelect = document.getElementById("bed-type");
+
+            roomTypeSelect.addEventListener("change", function () {
+                // Get the selected room type
+                const selectedRoomType = roomTypeSelect.value;
+
+                // Clear bed options
+                bedTypeSelect.innerHTML = "";
+
+                if (selectedRoomType === "AC" || selectedRoomType === "Non - AC") {
+                    // Add bed options based on the selected room type
+                    const bedOptions = ["1 beded room", "2 beded room","3 beded room" ,"4 beded room", "6 beded room", "8 beded room"];
+
+                    bedOptions.forEach((option) => {
+                        const optionElement = document.createElement("option");
+                        optionElement.value = option;
+                        optionElement.textContent = option;
+                        bedTypeSelect.appendChild(optionElement);
+                    });
+
+                    // Show the bed options
+                    bedOptionsDiv.style.display = "block";
+                } else {
+                    // Hide the bed options if an invalid room type is selected
+                    bedOptionsDiv.style.display = "none";
+                }
+            });
+
+            reservationForm.addEventListener("submit", function (e) {
+                e.preventDefault();
+
+                // Get form values
+                const name = document.getElementById("name").value;
+                const regNo = document.getElementById("regNo").value;
+                const cblock = document.getElementById("cblock").value;
+                const rblock = document.getElementById("rblock").value;
+                const roomType = document.getElementById("room-type").value;
+                const bedType = document.getElementById("bed-type").value;
+
+                // You can now use these values as needed
+                const details = `
+                    <p><strong>Name:</strong> ${name}</p>
+                    <p><strong>Registration Number:</strong> ${regNo}</p>
+                    <p><strong>Current Block:</strong> ${cblock}</p>
+                    <p><strong>Required Block:</strong> ${rblock}</p>
+                    <p><strong>Room Type:</strong> ${roomType}</p>
+                    <p><strong>Bed Type:</strong> ${bedType}</p>
+                `;
+
+                // Display the details (you can modify this part based on your requirements)
+                alert("Reservation Details:\n\n" + details);
+            });
+        });
+    </script>
+</body>
+</html>
