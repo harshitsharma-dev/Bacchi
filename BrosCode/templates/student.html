@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         body {
-            background-image: url('https://cdn.pixabay.com/photo/2017/08/30/01/05/milky-way-2695569_1280.jpg'); /* Add your background image URL here */
+            background-image: url('https://cdn.pixabay.com/photo/2017/08/30/01/05/milky-way-2695569_1280.jpg');
             background-size: cover;
             background-repeat: no-repeat;
             background-attachment: fixed;
@@ -61,18 +61,25 @@
             padding: 0.5rem 1rem;
             border: none;
             cursor: pointer;
-            margin-bottom: 2px;
-            
         }
 
         #bed-options {
             display: none;
         }
+
+        #price-tab {
+            display: none;
+            margin-top: 1rem;
+            border: 1px solid #ccc;
+            padding: 1rem;
+        }
     </style>
     <title>Hostel Room Upgradation</title>
 </head>
 <body>
-    <h1 align="center" style="color:azure">Student Dashboard</h1>
+    <header>
+        <h1>Student Dashboard</h1>
+    </header>
     <main>
         <section>
             <h2>Upgradation Form</h2>
@@ -87,16 +94,30 @@
                 </div>
                 <div class="form-group">
                     <label for="cblock">Current Block:</label>
-                    <input type="text" id="cblock" name="Current Block" required>
-                </div>
-                <div class="form-group">
-                    <label for="rblock">Required Block:</label>
-                    <input type="text" id="rblock" name="Required Block" required>
+                    <select id="cblock" name="cblock" required>
+                        <option value="none">Select Block</option>
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                        <option value="D">D</option>
+                        <option value="E">E</option>
+                        <option value="F">F</option>
+                        <option value="G">G</option>
+                        <option value="H">H</option>
+                        <option value="J">J</option>
+                        <option value="K">K</option>
+                        <option value="L">L</option>
+                        <option value="M">M</option>
+                        <option value="N">N</option>
+                        <option value="P">P</option>
+                        <option value="Q">Q</option>
+                        <option value="R">R</option>
+                    </select>
                 </div>
                 <div class="form-group">
                     <label for="room-type">Room Type:</label>
                     <select id="room-type" name="room-type" required>
-                        <option value="none">NONE</option>
+                        <option value="none">None</option>
                         <option value="AC">AC</option>
                         <option value="Non - AC">Non - AC</option>
                     </select>
@@ -108,28 +129,72 @@
                     </select>
                 </div>
                 <div class="form-group">
+                    <label for="rblock">Required Block:</label>
+                    <select id="rblock" name="rblock" required>
+                        <option value="none">Select Block</option>
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                        <option value="D">D</option>
+                        <option value="E">E</option>
+                        <option value="F">F</option>
+                        <option value="G">G</option>
+                        <option value="H">H</option>
+                        <option value="J">J</option>
+                        <option value="K">K</option>
+                        <option value="L">L</option>
+                        <option value="M">M</option>
+                        <option value="N">N</option>
+                        <option value="P">P</option>
+                        <option value="Q">Q</option>
+                        <option value="R">R</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="new-room-type">New Room Type:</label>
+                    <select id="new-room-type" name="new-room-type" required>
+                        <option value="none">None</option>
+                        <option value="AC">AC</option>
+                        <option value="Non - AC">Non - AC</option>
+                    </select>
+                </div>
+                <div class="form-group" id="new-bed-options">
+                    <label for="new-bed-type">New Bed Type:</label>
+                    <select id="new-bed-type" name="new-bed-type" required>
+                        <!-- Options will be dynamically added here -->
+                    </select>
+                </div>
+                <div class="form-group">
                     <button type="submit">Submit</button>
                 </div>
             </form>
         </section>
+
+        <!-- Price tab to display the price difference -->
+        <div id="price-tab">
+            <h3>Price Difference</h3>
+            <p id="price-difference">Please select your room and bed type to calculate the price difference.</p>
+        </div>
     </main>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             const reservationForm = document.getElementById("reservation-form");
             const roomTypeSelect = document.getElementById("room-type");
+            const newRoomTypeSelect = document.getElementById("new-room-type");
             const bedOptionsDiv = document.getElementById("bed-options");
+            const newBedOptionsDiv = document.getElementById("new-bed-options");
             const bedTypeSelect = document.getElementById("bed-type");
+            const newBedTypeSelect = document.getElementById("new-bed-type");
+            const rblockSelect = document.getElementById("rblock");
+            const cblockSelect = document.getElementById("cblock");
 
             roomTypeSelect.addEventListener("change", function () {
-                // Get the selected room type
                 const selectedRoomType = roomTypeSelect.value;
 
-                // Clear bed options
                 bedTypeSelect.innerHTML = "";
 
                 if (selectedRoomType === "AC" || selectedRoomType === "Non - AC") {
-                    // Add bed options based on the selected room type
-                    const bedOptions = ["1 beded room", "2 beded room","3 beded room" ,"4 beded room", "6 beded room", "8 beded room"];
+                    const bedOptions = ["1 beded room", "2 beded room", "3 beded room", "4 beded room", "6 beded room", "8 beded room"];
 
                     bedOptions.forEach((option) => {
                         const optionElement = document.createElement("option");
@@ -138,26 +203,567 @@
                         bedTypeSelect.appendChild(optionElement);
                     });
 
-                    // Show the bed options
                     bedOptionsDiv.style.display = "block";
                 } else {
-                    // Hide the bed options if an invalid room type is selected
                     bedOptionsDiv.style.display = "none";
+                }
+            });
+            cblockSelect.addEventListener("change", function () {
+    const selectedCBlock = cblockSelect.value;
+
+    bedTypeSelect.innerHTML = "";
+
+    if (selectedCBlock === "R") {
+        // Set the "New Room Type" dropdown to "AC" only
+        roomTypeSelect.value = "AC";
+        roomTypeSelect.disabled = true;
+        
+        // Set the "New Bed Type" dropdown to "2 beded room" by default
+        const optionElement = document.createElement("option");
+        optionElement.value = "2 beded room";
+        optionElement.textContent = "2 beded room";
+        bedTypeSelect.appendChild(optionElement);
+
+        bedOptionsDiv.style.display = "block";
+    }
+    else if (selectedCBlock === "Q") {
+        // Set the "New Room Type" dropdown to "AC" only
+        roomTypeSelect.value = "AC";
+        roomTypeSelect.disabled = true;
+        
+        // Set the "New Bed Type" dropdown to "2 beded room" by default
+        const optionElement = document.createElement("option");
+        optionElement.value = "2 beded room";
+        optionElement.textContent = "2 beded room";
+        bedTypeSelect.appendChild(optionElement);
+
+        bedOptionsDiv.style.display = "block";
+    }
+    else if (selectedCBlock === "M") {
+        // Set the "New Room Type" dropdown to "AC" only
+        roomTypeSelect.value = "AC";
+        roomTypeSelect.disabled = true;
+        
+        // Set the "New Bed Type" dropdown to "2 beded room" by default
+        const optionElement = document.createElement("option");
+        optionElement.value = "2 beded room";
+        optionElement.textContent = "2 beded room";
+        bedTypeSelect.appendChild(optionElement);
+
+        bedOptionsDiv.style.display = "block";
+    } 
+    else if (selectedCBlock === "N") {
+        // Set the "New Room Type" dropdown to "AC" only
+        roomTypeSelect.value = "AC";
+        roomTypeSelect.disabled = true;
+        
+        // Set the "New Bed Type" dropdown to "2 beded room" by default
+        const optionElement = document.createElement("option");
+        optionElement.value = "2 beded room";
+        optionElement.textContent = "2 beded room";
+        bedTypeSelect.appendChild(optionElement);
+
+        bedOptionsDiv.style.display = "block";
+    }
+    else if (selectedCBlock === "K") {
+        // Set the "New Room Type" dropdown to "AC" only
+        roomTypeSelect.value = "AC";
+        roomTypeSelect.disabled = true;
+        
+        // Set the "New Bed Type" dropdown to "2 beded room" by default
+        const optionElement = document.createElement("option");
+        optionElement.value = "2 beded room";
+        optionElement.textContent = "2 beded room";
+        bedTypeSelect.appendChild(optionElement);
+
+        bedOptionsDiv.style.display = "block";
+    }
+    else if (selectedCBlock === "L") {
+        // Set the "New Room Type" dropdown to "AC" only
+        roomTypeSelect.value = "AC";
+        roomTypeSelect.disabled = true;
+        
+        // Set the "New Bed Type" dropdown to "2 beded room" by default
+        const optionElement = document.createElement("option");
+        optionElement.value = "2 beded room";
+        optionElement.textContent = "2 beded room";
+        bedTypeSelect.appendChild(optionElement);
+
+        bedOptionsDiv.style.display = "block";
+    }
+    else {
+        // Enable the "New Room Type" dropdown and clear any previous options
+        roomTypeSelect.disabled = false;
+        roomTypeSelect.value = "none";
+        
+        bedOptionsDiv.style.display = "none";
+    }
+});
+            cblockSelect.addEventListener("change", function () {
+                const selectedCBlock = cblockSelect.value;
+
+                bedTypeSelect.innerHTML = "";
+
+                if (selectedCBlock === "R") {
+                    const bedOptions = ["2 beded room", "3 beded room", "4 beded room"];
+
+                    bedOptions.forEach((option) => {
+                        const optionElement = document.createElement("option");
+                        optionElement.value = option;
+                        optionElement.textContent = option;
+                        bedTypeSelect.appendChild(optionElement);
+                    });
+
+                    bedOptionsDiv.style.display = "block";
+                }
+                
+               else if (selectedCBlock === "Q") {
+                    const bedOptions = ["2 beded room", "4 beded room","6 beded room","8 beded room"];
+
+                    bedOptions.forEach((option) => {
+                        const optionElement = document.createElement("option");
+                        optionElement.value = option;
+                        optionElement.textContent = option;
+                        bedTypeSelect.appendChild(optionElement);
+                    });
+
+                    bedOptionsDiv.style.display = "block";
+                }
+                else if (selectedCBlock === "N") {
+                    const bedOptions = ["2 beded room", "3 beded room","6 beded room"];
+
+                    bedOptions.forEach((option) => {
+                        const optionElement = document.createElement("option");
+                        optionElement.value = option;
+                        optionElement.textContent = option;
+                        bedTypeSelect.appendChild(optionElement);
+                    });
+
+                    bedOptionsDiv.style.display = "block";
+                }
+                else if (selectedCBlock === "M") {
+                    const bedOptions = ["2 beded room", "3 beded room", "6 beded room"];
+
+                    bedOptions.forEach((option) => {
+                        const optionElement = document.createElement("option");
+                        optionElement.value = option;
+                        optionElement.textContent = option;
+                        bedTypeSelect.appendChild(optionElement);
+                    });
+
+                    edOptionsDiv.style.display = "block";
+                }
+                else if (selectedCBlock === "K") {
+                    const bedOptions = ["2 beded room", "4 beded room", "6 beded room"];
+
+                    bedOptions.forEach((option) => {
+                        const optionElement = document.createElement("option");
+                        optionElement.value = option;
+                        optionElement.textContent = option;
+                        bedTypeSelect.appendChild(optionElement);
+                    });
+
+                    edOptionsDiv.style.display = "block";
+                }
+                else if (selectedCBlock === "L") {
+                    const bedOptions = ["2 beded room", "4 beded room", "6 beded room"];
+
+                    bedOptions.forEach((option) => {
+                        const optionElement = document.createElement("option");
+                        optionElement.value = option;
+                        optionElement.textContent = option;
+                        bedTypeSelect.appendChild(optionElement);
+                    });
+
+                    edOptionsDiv.style.display = "block";
+                }
+                else if (selectedCBlock === "P") {
+                    const bedOptions = ["2 beded room", "4 beded room", "6 beded room"];
+
+                    bedOptions.forEach((option) => {
+                        const optionElement = document.createElement("option");
+                        optionElement.value = option;
+                        optionElement.textContent = option;
+                        bedTypeSelect.appendChild(optionElement);
+                    });
+
+                    edOptionsDiv.style.display = "block";
+                }
+                else if (selectedCBlock === "J") {
+                    const bedOptions = ["1 beded room","2 beded room", "3 beded room", "6 beded room"];
+
+                    bedOptions.forEach((option) => {
+                        const optionElement = document.createElement("option");
+                        optionElement.value = option;
+                        optionElement.textContent = option;
+                        bedTypeSelect.appendChild(optionElement);
+                    });
+
+                    edOptionsDiv.style.display = "block";
+                }
+                else if (selectedCBlock === "H") {
+                    const bedOptions = ["1 beded room","2 beded room", "3 beded room", "6 beded room"];
+
+                    bedOptions.forEach((option) => {
+                        const optionElement = document.createElement("option");
+                        optionElement.value = option;
+                        optionElement.textContent = option;
+                        bedTypeSelect.appendChild(optionElement);
+                    });
+
+                    edOptionsDiv.style.display = "block";
+                }
+                else if (selectedCBlock === "G") {
+                    const bedOptions = ["1 beded room","2 beded room", "3 beded room", "4 beded room"];
+
+                    bedOptions.forEach((option) => {
+                        const optionElement = document.createElement("option");
+                        optionElement.value = option;
+                        optionElement.textContent = option;
+                        bedTypeSelect.appendChild(optionElement);
+                    });
+
+                    edOptionsDiv.style.display = "block";
+                }
+                else if (selectedCBlock === "F") {
+                    const bedOptions = ["2 beded room", "4 beded room", "6 beded room"];
+
+                    bedOptions.forEach((option) => {
+                        const optionElement = document.createElement("option");
+                        optionElement.value = option;
+                        optionElement.textContent = option;
+                        bedTypeSelect.appendChild(optionElement);
+                    });
+
+                    edOptionsDiv.style.display = "block";
+                }
+                else if (selectedCBlock === "E") {
+                    const bedOptions = ["2 beded room", "4 beded room", "6 beded room"];
+
+                    bedOptions.forEach((option) => {
+                        const optionElement = document.createElement("option");
+                        optionElement.value = option;
+                        optionElement.textContent = option;
+                        bedTypeSelect.appendChild(optionElement);
+                    });
+
+                    edOptionsDiv.style.display = "block";
+                }
+                 else {
+                    bedOptionsDiv.style.display = "none";
+                }
+            });
+    
+    rblockSelect.addEventListener("change", function () {
+    const selectedRBlock = rblockSelect.value;
+
+    newBedTypeSelect.innerHTML = "";
+
+    if (selectedRBlock === "R") {
+        // Set the "New Room Type" dropdown to "AC" only
+        newRoomTypeSelect.value = "AC";
+        newRoomTypeSelect.disabled = true;
+        
+        // Set the "New Bed Type" dropdown to "2 beded room" by default
+        const optionElement = document.createElement("option");
+        optionElement.value = "2 beded room";
+        optionElement.textContent = "2 beded room";
+        newBedTypeSelect.appendChild(optionElement);
+
+        newBedOptionsDiv.style.display = "block";
+    }
+    else if (selectedRBlock === "Q") {
+        // Set the "New Room Type" dropdown to "AC" only
+        newRoomTypeSelect.value = "AC";
+        newRoomTypeSelect.disabled = true;
+        
+        // Set the "New Bed Type" dropdown to "2 beded room" by default
+        const optionElement = document.createElement("option");
+        optionElement.value = "2 beded room";
+        optionElement.textContent = "2 beded room";
+        newBedTypeSelect.appendChild(optionElement);
+
+        newBedOptionsDiv.style.display = "block";
+    }
+    else if (selectedRBlock === "M") {
+        // Set the "New Room Type" dropdown to "AC" only
+        newRoomTypeSelect.value = "AC";
+        newRoomTypeSelect.disabled = true;
+        
+        // Set the "New Bed Type" dropdown to "2 beded room" by default
+        const optionElement = document.createElement("option");
+        optionElement.value = "2 beded room";
+        optionElement.textContent = "2 beded room";
+        newBedTypeSelect.appendChild(optionElement);
+
+        newBedOptionsDiv.style.display = "block";
+    } 
+    else if (selectedRBlock === "N") {
+        // Set the "New Room Type" dropdown to "AC" only
+        newRoomTypeSelect.value = "AC";
+        newRoomTypeSelect.disabled = true;
+        
+        // Set the "New Bed Type" dropdown to "2 beded room" by default
+        const optionElement = document.createElement("option");
+        optionElement.value = "2 beded room";
+        optionElement.textContent = "2 beded room";
+        newBedTypeSelect.appendChild(optionElement);
+
+        newBedOptionsDiv.style.display = "block";
+    }
+    else if (selectedRBlock === "K") {
+        // Set the "New Room Type" dropdown to "AC" only
+        newRoomTypeSelect.value = "AC";
+        newRoomTypeSelect.disabled = true;
+        
+        // Set the "New Bed Type" dropdown to "2 beded room" by default
+        const optionElement = document.createElement("option");
+        optionElement.value = "2 beded room";
+        optionElement.textContent = "2 beded room";
+        newBedTypeSelect.appendChild(optionElement);
+
+        newBedOptionsDiv.style.display = "block";
+    }
+    else if (selectedRBlock === "L") {
+        // Set the "New Room Type" dropdown to "AC" only
+        newRoomTypeSelect.value = "AC";
+        newRoomTypeSelect.disabled = true;
+        
+        // Set the "New Bed Type" dropdown to "2 beded room" by default
+        const optionElement = document.createElement("option");
+        optionElement.value = "2 beded room";
+        optionElement.textContent = "2 beded room";
+        newBedTypeSelect.appendChild(optionElement);
+
+        newBedOptionsDiv.style.display = "block";
+    }
+    else {
+        // Enable the "New Room Type" dropdown and clear any previous options
+        newRoomTypeSelect.disabled = false;
+        newRoomTypeSelect.value = "none";
+        
+        newBedOptionsDiv.style.display = "none";
+    }
+});
+
+
+            rblockSelect.addEventListener("change", function () {
+                const selectedRBlock = rblockSelect.value;
+
+                newBedTypeSelect.innerHTML = "";
+
+                if (selectedRBlock === "R") {
+                    const bedOptions = ["2 beded room", "3 beded room", "4 beded room"];
+
+                    bedOptions.forEach((option) => {
+                        const optionElement = document.createElement("option");
+                        optionElement.value = option;
+                        optionElement.textContent = option;
+                        newBedTypeSelect.appendChild(optionElement);
+                    });
+
+                    newBedOptionsDiv.style.display = "block";
+                }
+                
+               else if (selectedRBlock === "Q") {
+                    const bedOptions = ["2 beded room", "4 beded room","6 beded room","8 beded room"];
+
+                    bedOptions.forEach((option) => {
+                        const optionElement = document.createElement("option");
+                        optionElement.value = option;
+                        optionElement.textContent = option;
+                        newBedTypeSelect.appendChild(optionElement);
+                    });
+
+                    newBedOptionsDiv.style.display = "block";
+                }
+                else if (selectedRBlock === "N") {
+                    const bedOptions = ["2 beded room", "3 beded room","6 beded room"];
+
+                    bedOptions.forEach((option) => {
+                        const optionElement = document.createElement("option");
+                        optionElement.value = option;
+                        optionElement.textContent = option;
+                        newBedTypeSelect.appendChild(optionElement);
+                    });
+
+                    newBedOptionsDiv.style.display = "block";
+                }
+                else if (selectedRBlock === "M") {
+                    const bedOptions = ["2 beded room", "3 beded room", "6 beded room"];
+
+                    bedOptions.forEach((option) => {
+                        const optionElement = document.createElement("option");
+                        optionElement.value = option;
+                        optionElement.textContent = option;
+                        newBedTypeSelect.appendChild(optionElement);
+                    });
+
+                    newBedOptionsDiv.style.display = "block";
+                }
+                else if (selectedRBlock === "K") {
+                    const bedOptions = ["2 beded room", "4 beded room", "6 beded room"];
+
+                    bedOptions.forEach((option) => {
+                        const optionElement = document.createElement("option");
+                        optionElement.value = option;
+                        optionElement.textContent = option;
+                        newBedTypeSelect.appendChild(optionElement);
+                    });
+
+                    newBedOptionsDiv.style.display = "block";
+                }
+                else if (selectedRBlock === "L") {
+                    const bedOptions = ["2 beded room", "4 beded room", "6 beded room"];
+
+                    bedOptions.forEach((option) => {
+                        const optionElement = document.createElement("option");
+                        optionElement.value = option;
+                        optionElement.textContent = option;
+                        newBedTypeSelect.appendChild(optionElement);
+                    });
+
+                    newBedOptionsDiv.style.display = "block";
+                }
+                else if (selectedRBlock === "B") {
+                    const bedOptions = ["2 beded room", "3 beded room", "4 beded room"];
+
+                    bedOptions.forEach((option) => {
+                        const optionElement = document.createElement("option");
+                        optionElement.value = option;
+                        optionElement.textContent = option;
+                        newBedTypeSelect.appendChild(optionElement);
+                    });
+
+                    newBedOptionsDiv.style.display = "block";
+                }
+                else if (selectedRBlock === "P") {
+                    const bedOptions = ["2 beded room", "4 beded room", "6 beded room"];
+
+                    bedOptions.forEach((option) => {
+                        const optionElement = document.createElement("option");
+                        optionElement.value = option;
+                        optionElement.textContent = option;
+                        newBedTypeSelect.appendChild(optionElement);
+                    });
+
+                    newBedOptionsDiv.style.display = "block";
+                }
+                else if (selectedRBlock === "A") {
+                    const bedOptions = ["1 beded room", "3 beded room", "4 beded room"];
+
+                    bedOptions.forEach((option) => {
+                        const optionElement = document.createElement("option");
+                        optionElement.value = option;
+                        optionElement.textContent = option;
+                        newBedTypeSelect.appendChild(optionElement);
+                    });
+
+                    newBedOptionsDiv.style.display = "block";
+                }
+                else if (selectedRBlock === "C") {
+                    const bedOptions = ["2 beded room", "3 beded room", "4 beded room"];
+
+                    bedOptions.forEach((option) => {
+                        const optionElement = document.createElement("option");
+                        optionElement.value = option;
+                        optionElement.textContent = option;
+                        newBedTypeSelect.appendChild(optionElement);
+                    });
+
+                    newBedOptionsDiv.style.display = "block";
+                }
+                else if (selectedRBlock === "D") {
+                    const bedOptions = ["2 beded room", "3 beded room", "4 beded room"];
+
+                    bedOptions.forEach((option) => {
+                        const optionElement = document.createElement("option");
+                        optionElement.value = option;
+                        optionElement.textContent = option;
+                        newBedTypeSelect.appendChild(optionElement);
+                    });
+
+                    newBedOptionsDiv.style.display = "block";
+                }
+                else if (selectedRBlock === "E") {
+                    const bedOptions = ["2 beded room", "3 beded room", "4 beded room"];
+
+                    bedOptions.forEach((option) => {
+                        const optionElement = document.createElement("option");
+                        optionElement.value = option;
+                        optionElement.textContent = option;
+                        newBedTypeSelect.appendChild(optionElement);
+                    });
+
+                    newBedOptionsDiv.style.display = "block";
+                }
+                else if (selectedRBlock === "F") {
+                    const bedOptions = ["2 beded room", "3 beded room", "4 beded room"];
+
+                    bedOptions.forEach((option) => {
+                        const optionElement = document.createElement("option");
+                        optionElement.value = option;
+                        optionElement.textContent = option;
+                        newBedTypeSelect.appendChild(optionElement);
+                    });
+
+                    newBedOptionsDiv.style.display = "block";
+                }
+                else if (selectedRBlock === "G") {
+                    const bedOptions = ["2 beded room", "3 beded room", "4 beded room"];
+
+                    bedOptions.forEach((option) => {
+                        const optionElement = document.createElement("option");
+                        optionElement.value = option;
+                        optionElement.textContent = option;
+                        newBedTypeSelect.appendChild(optionElement);
+                    });
+
+                    newBedOptionsDiv.style.display = "block";
+                }
+                else if (selectedRBlock === "J") {
+                    const bedOptions = ["1 beded room", "2 beded room", "3 beded room"];
+
+                    bedOptions.forEach((option) => {
+                        const optionElement = document.createElement("option");
+                        optionElement.value = option;
+                        optionElement.textContent = option;
+                        newBedTypeSelect.appendChild(optionElement);
+                    });
+
+                    newBedOptionsDiv.style.display = "block";
+                }
+                else if (selectedRBlock === "H") {
+                    const bedOptions = ["1 beded room", "2 beded room", "4 beded room"];
+
+                    bedOptions.forEach((option) => {
+                        const optionElement = document.createElement("option");
+                        optionElement.value = option;
+                        optionElement.textContent = option;
+                        newBedTypeSelect.appendChild(optionElement);
+                    });
+
+                    newBedOptionsDiv.style.display = "block";
+                }
+                 else {
+                    newBedOptionsDiv.style.display = "none";
                 }
             });
 
             reservationForm.addEventListener("submit", function (e) {
                 e.preventDefault();
 
-                // Get form values
                 const name = document.getElementById("name").value;
                 const regNo = document.getElementById("regNo").value;
                 const cblock = document.getElementById("cblock").value;
                 const rblock = document.getElementById("rblock").value;
                 const roomType = document.getElementById("room-type").value;
                 const bedType = document.getElementById("bed-type").value;
+                const newRoomType = document.getElementById("new-room-type").value;
+                const newBedType = document.getElementById("new-bed-type").value;
 
-                // You can now use these values as needed
+                updatePriceDifference(roomType, bedType, newRoomType, newBedType);
+
                 const details = `
                     <p><strong>Name:</strong> ${name}</p>
                     <p><strong>Registration Number:</strong> ${regNo}</p>
@@ -165,11 +771,46 @@
                     <p><strong>Required Block:</strong> ${rblock}</p>
                     <p><strong>Room Type:</strong> ${roomType}</p>
                     <p><strong>Bed Type:</strong> ${bedType}</p>
+                    <p><strong>New Room Type:</strong> ${newRoomType}</p>
+                    <p><strong>New Bed Type:</strong> ${newBedType}</p>
                 `;
 
-                // Display the details (you can modify this part based on your requirements)
                 alert("Reservation Details:\n\n" + details);
             });
+
+            function updatePriceDifference(oldRoomType, oldBedType, newRoomType, newBedType) {
+                const priceMap = {
+                    "AC": {
+                        "1 beded room": 174000,
+                        "2 beded room": 143300,
+                        "3 beded room": 135700,
+                        "4 beded room": 124200,
+                        "6 beded room": 116200,
+                        "8 beded room": 125400,
+                    },
+                    "Non - AC": {
+                        "1 beded room": 128900,
+                        "2 beded room": 112600,
+                        "3 beded room": 105400,
+                        "4 beded room": 99500,
+                        "6 beded room": 95100,
+                        "8 beded room": 105400,
+                    }
+                };
+
+                const oldPrice = priceMap[oldRoomType] ? priceMap[oldRoomType][oldBedType] : 0;
+                const newPrice = priceMap[newRoomType] ? priceMap[newRoomType][newBedType] : 0;
+
+                const priceDifference = newPrice - oldPrice;
+                if (priceDifference<0){
+                    priceDifference=0;
+                }
+                const priceDifferenceElement = document.getElementById("price-difference");
+                priceDifferenceElement.textContent = `Price Difference: Rs ${priceDifference}`;
+
+                const priceTab = document.getElementById("price-tab");
+                priceTab.style.display = "block";
+            }
         });
     </script>
 </body>
