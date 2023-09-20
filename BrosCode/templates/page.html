@@ -5,15 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dynamic Table</title>
     <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+            padding: 20px 0;
+            background-color: #007BFF;
+            color: white;
+        }
+
         table {
             border-collapse: collapse;
             width: 80%;
             margin: 20px auto;
+            background-color: #fff;
         }
 
         th, td {
             border: 1px solid #ddd;
-            padding: 8px;
+            padding: 10px;
             text-align: left;
         }
 
@@ -23,11 +38,21 @@
 
         #addRowBtn {
             margin: 10px;
-            padding: 5px 10px;
+            padding: 10px 20px;
             background-color: #007BFF;
             color: white;
             border: none;
             cursor: pointer;
+            border-radius: 5px;
+        }
+
+        #csvTable {
+            display: none;
+        }
+
+        #csvInput {
+            display: block;
+            margin: 20px auto;
         }
     </style>
 </head>
@@ -58,9 +83,14 @@
         </tbody>
     </table>
 
+    <input type="file" id="csvInput" accept=".csv">
+    <table id="csvTable"></table>
+
     <script>
         const addRowButton = document.getElementById("addRowBtn");
         const dataForm = document.getElementById("dataForm");
+        const csvInput = document.getElementById("csvInput");
+        const csvTable = document.getElementById("csvTable");
 
         addRowButton.addEventListener("click", function () {
             // Clone the form and its elements
@@ -81,6 +111,40 @@
             // Reload the page with the new URL
             window.location.href = newURL;
         });
+
+        // Function to handle CSV file input
+        csvInput.addEventListener("change", function (event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const contents = e.target.result;
+                    displayCSV(contents);
+                };
+                reader.readAsText(file);
+            }
+        });
+
+        // Function to display CSV data in a table
+        function displayCSV(csv) {
+            const rows = csv.split("\n");
+            csvTable.innerHTML = '';
+
+            rows.forEach(row => {
+                const columns = row.split(",");
+                const tableRow = document.createElement("tr");
+
+                columns.forEach(column => {
+                    const tableData = document.createElement("td");
+                    tableData.textContent = column;
+                    tableRow.appendChild(tableData);
+                });
+
+                csvTable.appendChild(tableRow);
+            });
+
+            csvTable.style.display = 'table';
+        }
     </script>
 </body>
 </html>

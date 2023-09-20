@@ -26,7 +26,7 @@
         }
 
         header h1 {
-            font-size: 36px;
+            font-size: 48px; /* Increased font size */
             margin: 0;
         }
 
@@ -39,12 +39,12 @@
 
         .login-option {
             text-align: center;
-            background-color: #fff;
+            background-color: #f5f5f5; /* Light gray background */
             border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Increased shadow */
             margin: 20px;
-            padding: 20px;
-            transition: transform 0.2s; 
+            padding: 40px; /* Increased padding */
+            transition: transform 0.2s;
         }
 
         .login-option:hover {
@@ -53,17 +53,17 @@
 
         .login-option h2 {
             margin-bottom: 20px;
-            font-size: 24px;
+            font-size: 28px; /* Increased font size */
         }
 
         /* Style the buttons */
         .login-option button {
             background-color: #007BFF;
             color: white;
-            padding: 10px 20px;
+            padding: 12px 24px; /* Increased padding */
             border: none;
             cursor: pointer;
-            font-size: 18px;
+            font-size: 20px; /* Increased font size */
             border-radius: 4px;
         }
 
@@ -84,26 +84,29 @@
 </head>
 
 <body>
-    
+
     <header>
         <h1>Vrooom</h1>
     </header>
 
     <main>
         <div class="login-container">
-            <div class="login-option">
-                <h2>Student</h2>
-                <a href="student.html">
-                    <button type="submit">Login</button>
-                </a>
-            </div>
-
-            <div class="login-option">
-                <h2>Warden</h2>
-                <a href="wardendashboard.html">
-                    <button type="submit">Login</button>
-                </a>
-            </div>
+            <form action="csvstudent">
+                <div class="login-option">
+                    <h2>Student</h2>
+                    <a href="student.html">
+                        <button type="submit">Login</button>
+                    </a>
+                </div>
+            </form>
+            <form action="csvwarden">
+                <div class="login-option">
+                    <h2>Warden</h2>
+                    <a href="wardendashboard.html">
+                        <button type="submit">Login</button>
+                    </a>
+                </div>
+            </form>
         </div>
     </main>
 

@@ -6,5 +6,6 @@ urlpatterns = [
     path('csvstudent',views.csvstudent, name='csvstudent'),
     path("page",views.page,name='page'),
     path("actit",views.actit,name='actit'),
-    path("doit",views.doit, name='doit')
+    path("doit",views.doit, name='doit'),
+    path("pageforstudent",views.pageforstudent, name="pageforstudent")
 ]

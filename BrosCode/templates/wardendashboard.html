@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         body {
-            background-image: url('https://cdn.pixabay.com/photo/2017/08/30/01/05/milky-way-2695569_1280.jpg'); /* Add your background image URL here */
+            background-image: url('https://cdn.pixabay.com/photo/2017/08/30/01/05/milky-way-2695569_1280.jpg');
             background-size: cover;
             background-repeat: no-repeat;
             background-attachment: fixed;
@@ -27,7 +27,7 @@
             max-width: 800px;
             margin: 2rem auto;
             padding: 1rem;
-            background-color: #fff;
+            background-color: rgba(255, 255, 255, 0.9);
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
         }
@@ -57,12 +57,20 @@
         #bed-options {
             display: none;
         }
+
+        h1 {
+            font-size: 2rem;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+        }
     </style>
     <title>Hostel Room Upgradation</title>
 </head>
 <body>
     <header>
-        <h1 align="center" style="color:azure">Warden Dashboard</h1>
+        <h1>Warden Dashboard</h1>
     </header>
     <main>
         <section>
@@ -75,20 +83,89 @@
                 <input type="text" id="empId" name="empId" required>
 
                 <label for="block">Warden's Block:</label>
-                <input type="text" id="block" name="block" required>
+                <select id="block" name="block" required>
+                    <option value="none">Select Block</option>
+                    <option value="A">A</option>
+                    <option value="B">B</option>
+                    <option value="C">C</option>
+                    <option value="D">D</option>
+                    <option value="E">E</option>
+                    <option value="F">F</option>
+                    <option value="G">G</option>
+                    <option value="H">H</option>
+                    <option value="J">J</option>
+                    <option value="K">K</option>
+                    <option value="L">L</option>
+                    <option value="M">M</option>
+                    <option value="N">N</option>
+                    <option value="P">P</option>
+                    <option value="Q">Q</option>
+                    <option value="R">R</option>
+                </select>
+
+                
 
                 <button type="submit">Submit</button>
             </form>
         </section>
-                
-        <a href="page.html">Vacant Room List</a>
     </main>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
+            const blockSelect = document.getElementById("block");
             const bedOptionsDiv = document.getElementById("bed-options");
+            const bedTypeSelect = document.getElementById("bed-type");
 
             // Hide the bed options initially
             bedOptionsDiv.style.display = "none";
+
+            // Event listener for block selection
+            blockSelect.addEventListener("change", function () {
+                const selectedBlock = blockSelect.value;
+
+                // Clear bed options
+                bedTypeSelect.innerHTML = "";
+
+                switch (selectedBlock) {
+                    case "N":
+                        // Options for block N
+                        const bedOptionsN = ["2 beded room", "3 beded room"];
+                        addBedOptions(bedOptionsN);
+                        break;
+                    case "P":
+                        // Options for block P
+                        const bedOptionsP = ["6 beded room"];
+                        addBedOptions(bedOptionsP);
+                        break;
+                    case "Q":
+                        // Options for block Q
+                        const bedOptionsQ = ["2 beded room", "3 beded room", "4 beded room", "6 beded room"];
+                        addBedOptions(bedOptionsQ);
+                        break;
+                    case "R":
+                        // Options for block R
+                        const bedOptionsR = ["2 beded room"];
+                        addBedOptions(bedOptionsR);
+                        break;
+                    default:
+                        // Default options
+                        const bedOptionsDefault = ["1 beded room", "2 beded room", "3 beded room", "4 beded room", "6 beded room", "8 beded room"];
+                        addBedOptions(bedOptionsDefault);
+                        break;
+                }
+
+                // Show the bed options
+                bedOptionsDiv.style.display = "block";
+            });
+
+            // Function to add bed options to the select element
+            function addBedOptions(options) {
+                options.forEach((option) => {
+                    const optionElement = document.createElement("option");
+                    optionElement.value = option;
+                    optionElement.textContent = option;
+                    bedTypeSelect.appendChild(optionElement);
+                });
+            }
         });
     </script>
 </body>

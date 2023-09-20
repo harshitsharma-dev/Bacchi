@@ -24,7 +24,7 @@
         }
 
         main {
-            max-width: 800px;
+            max-width: 80%;
             margin: 2rem auto;
             padding: 1rem;
             background-color: #fff;
@@ -49,7 +49,7 @@
 
         input[type="text"],
         select {
-            width: 100%;
+            width: 80%;
             padding: 0.5rem;
             border: 1px solid #ccc;
             border-radius: 3px;
@@ -774,20 +774,6 @@
                     <p><strong>New Room Type:</strong> ${newRoomType}</p>
                     <p><strong>New Bed Type:</strong> ${newBedType}</p>
                 `;
-                fetch("https://github.com/harshitsharma-dev/Bacchi/blob/main/BrosCode/Details.csv")
-        .then((response) => response.text())
-        .then((csvContent) => {
-            // Display CSV content in a new window
-            const csvWindow = window.open("", "_blank");
-            csvWindow.document.open();
-            csvWindow.document.write(`<pre>${csvContent}</pre>`);
-            csvWindow.document.close();
-        })
-        .catch((error) => {
-            console.error("Error fetching CSV:", error);
-            alert("Error fetching CSV. Please try again later.");
-        });
-
 
                 alert("Reservation Details:\n\n" + details);
             });

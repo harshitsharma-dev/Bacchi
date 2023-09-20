@@ -12,44 +12,11 @@ def csvwarden(request):
     return render(request, "wardendashboard.html")
 def csvstudent(request):
     return render(request, "student.html")
+
 def page(request):
-    print(request,"this is request")
-    wname = request.GET['wname']
-    empId = request.GET['empId']
-    wblock = request.GET['block']
-    wnamelist = []          
-    empIdlist = []         
-    wblocklist = []
-    print(wname, "this is wname")    
-    print(empId, "this is empId")    
-    for i in range(len(df['0'])):
-        wnamelist.append(df['0'][i])
-        empIdlist.append(df['1'][i])
-        wblocklist.append(df['2'][i])
-
-    # Assuming you have empId, wname, and wblock as variables
-
-    finallist = []
-
-    # You need to use a loop to iterate over the existing DataFrame, not just based on the length of empIdlist
-    for i in range(len(df['0'])):
-        finallist.append([wnamelist[i], empIdlist[i], wblocklist[i]])
-    if empId not in empIdlist:
-        wnamelist.append(wname)
-        empIdlist.append(empId)
-        wblocklist.append(wblock)
-        finallist.append([wnamelist[len(wnamelist)-1], empIdlist[len(wnamelist)-1], wblocklist[len(wnamelist)-1]])
-    print(wblocklist)
-    print(finallist)
-    dfe = pd.DataFrame(finallist)
-    print(dfe,"this isdatafram")
-    dfe.to_csv('BrosCode - Sheet1.csv')
-    os.system("git add 'BrosCode - Sheet1.csv'")
-    now = datetime.now()
-    dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
-    os.system("git commit -m 'changed again{dt_string}'")
-    os.system("git push origin master")
     return render(request,'page.html')
+def pageforstudent(request):
+    return render(request, 'pageforstudent.html')
 def actit(request):
     df = pd.read_csv('Details.csv')
     Block = request.GET.get('block', '')

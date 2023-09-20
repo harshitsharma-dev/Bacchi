@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Table</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 80%;
+            margin: 20px auto;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        #addRowBtn {
+            margin: 10px;
+            padding: 5px 10px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        #csvTable {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Dynamic Table</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Block</th>
+                <th>Room No.</th>
+                <th>Room Type</th>
+                <th>Occupancy</th>
+                <th>Residents</th>
+            </tr>
+        </thead>
+        <tbody id="tableBody">
+            <!-- Inbuilt single row -->
+            <tr>
+                <form id="dataForm" action="actit" method="GET">
+                    <td><input type="text" name="block"></td>
+                    <td><input type="text" name="roomNo"></td>
+                    <td><input type="text" name="roomType"></td>
+                    <td><input type="text" name="occupancy"></td>
+                    <td><input type="number" name="residents" value="0"></td>
+                    <input type="submit" value="Add Row" id="addRowBtn">
+                </form>
+            </tr>
+        </tbody>
+    </table>
+
+    <input type="file" id="csvInput" accept=".csv">
+    <table id="csvTable"></table>
+
+    <script>
+        const addRowButton = document.getElementById("addRowBtn");
+        const dataForm = document.getElementById("dataForm");
+        const csvInput = document.getElementById("csvInput");
+        const csvTable = document.getElementById("csvTable");
+
+        addRowButton.addEventListener("click", function () {
+            // Clone the form and its elements
+            const newRow = dataForm.cloneNode(true);
+
+            // Clear input values in the new row
+            const inputs = newRow.querySelectorAll('input');
+            inputs.forEach(input => input.value = '');
+
+            // Append the new row to the table body
+            document.getElementById("tableBody").appendChild(newRow);
+
+            // Construct the URL with input data
+            const formData = new FormData(newRow);
+            const urlParams = new URLSearchParams(formData);
+            const newURL = dataForm.getAttribute("action") + '?' + urlParams.toString();
+
+            // Reload the page with the new URL
+            window.location.href = newURL;
+        });
+
+        // Function to handle CSV file input
+        csvInput.addEventListener("change", function (event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const contents = e.target.result;
+                    displayCSV(contents);
+                };
+                reader.readAsText(file);
+            }
+        });
+
+        // Function to display CSV data in a table
+        function displayCSV(csv) {
+            const rows = csv.split("\n");
+            csvTable.innerHTML = '';
+
+            rows.forEach(row => {
+                const columns = row.split(",");
+                const tableRow = document.createElement("tr");
+
+                columns.forEach(column => {
+                    const tableData = document.createElement("td");
+                    tableData.textContent = column;
+                    tableRow.appendChild(tableData);
+                });
+
+                csvTable.appendChild(tableRow);
+            });
+
+            csvTable.style.display = 'table';
+        }
+    </script>
+</body>
+</html>
